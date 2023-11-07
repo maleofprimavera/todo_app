@@ -16,6 +16,7 @@ class TaskState extends Equatable{
   }) {
     return TaskState(
       status: status ?? this.status,
+tasks: tasks ?? this.tasks
     );
   }
 
@@ -44,6 +45,6 @@ class TaskState extends Equatable{
   //   };
   // }
   @override
-  List<Object?> get props => [TaskPreference,status];
+  List<Object?> get props => [tasks,status];
 
 }

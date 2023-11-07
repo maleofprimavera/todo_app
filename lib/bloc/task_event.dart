@@ -10,7 +10,11 @@ abstract class TaskEvent extends Equatable {
 }
 
 class TaskStarted extends TaskEvent {
+// final List<Map<String, Task>> listTasks;
+const TaskStarted();
 
+@override
+List<Object?> get props => [];
 }
 
 class AddTask extends TaskEvent {

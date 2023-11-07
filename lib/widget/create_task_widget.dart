@@ -5,7 +5,7 @@ import 'package:todo_app/bloc/task_state.dart';
 import '../bloc/task_bloc.dart';
 import '../bloc/task_event.dart';
 import '../model/task_model.dart';
-import '../utils/task_shared_preference.dart';
+import '../notification/notification_api.dart';
 import 'home.dart';
 
 class CreateTask extends StatefulWidget {
@@ -49,7 +49,6 @@ class _CreateTaskState extends State<CreateTask> {
                   onSubmitted: (value) {
                     setState(() {
                       _taskName = value;
-                      print(_taskName);
                     });
                   },
                 ),
@@ -122,7 +121,8 @@ class _CreateTaskState extends State<CreateTask> {
                       createdTime: DateTime.now(),
                       dueTime: _pickDate!,
                       taskDescription: _taskDescription);
-                  // NotificationApi.showNotification(id: task.createdTime.microsecondsSinceEpoch,scheduledDate: task.dueTime, title: "${task.taskName}", body: "${task.taskDescription}");
+                  // await NotificationApi.showNotification(scheduledDate: DateTime.now().add(Duration(seconds: 15)), title: task.taskName, body: "${task.taskDescription}");
+                  NotificationApi.showNoScheNotification(title: task.taskName, body: "${task.taskDescription}");
                   context.read<TaskBloc>().add(AddTask(task: task));
                   print("epoch: " + DateTime.now().microsecondsSinceEpoch.toString());
                   // await TaskPreference.saveTask(taskName: _taskName, createdTime: DateTime.now(), dueTime: _pickDate!,taskDescription: _taskDescription);

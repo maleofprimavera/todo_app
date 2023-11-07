@@ -84,7 +84,6 @@ class _EditTaskState extends State<EditTask> {
                           onSubmitted: (value) {
                             setState(() {
                               _taskName = value;
-                              print(_taskName);
                             });
                           },
                         ),

@@ -34,7 +34,7 @@ class TaskPreference {
         taskDescription: taskDescription,
         dueTime: dueTime);
     setTask(createdTime.toString(), task);
-    print(_taskPrefs!.getString(task.createdTime.toString()));
+    // print(_taskPrefs!.getString(task.createdTime.toString()));
   }
 
     static editTask(
@@ -66,9 +66,9 @@ class TaskPreference {
   }
 
   static getTaskWithKey({required String keyTask}) async {
-    print(keyTask);
+    // print(keyTask);
     String? taskString = await getTask(keyTask);
-    print("taskString is:  ${taskString}");
+    // print("taskString is:  ${taskString}");
     if (taskString != null) {
       Task task = Task.fromJson(json.decode(taskString));
       return task;
@@ -87,8 +87,8 @@ class TaskPreference {
             .add({key: await TaskPreference.getTaskWithKey(keyTask: key)});
       }
       ;
-      print(setKeys.toString());
-      print(listTaskWithKey.toString());
+      // print(setKeys.toString());
+      // print(listTaskWithKey.toString());
       return listTaskWithKey;
     }
     return [];
