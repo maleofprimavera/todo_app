@@ -6,6 +6,7 @@ import 'package:todo_app/bloc/task_event.dart';
 
 import '../bloc/task_bloc.dart';
 import '../bloc/task_state.dart';
+import '../notification/notification_api.dart';
 import 'home.dart';
 import '../model/task_model.dart';
 import '../utils/task_shared_preference.dart';
@@ -111,10 +112,6 @@ class _EditTaskState extends State<EditTask> {
                                 onSubmitted: (value) {
                                   _dateController.text = value;
                                   print("Date picked: " + _dateController.text);
-                                  // setState(() {
-                                  //   _dateController.text= value;
-                                  //   print("Date picked: " + _dateController.text);
-                                  // });
                                 },
                               ),
                             ),
@@ -151,7 +148,6 @@ class _EditTaskState extends State<EditTask> {
                         child: const Text('Cancel')),
                     TextButton(
                         onPressed: () {
-                          // TaskPreference.deleteTask(keyTask);
                           context
                               .read<TaskBloc>()
                               .add(RemoveTask(taskKey: keyTask));
@@ -173,9 +169,11 @@ class _EditTaskState extends State<EditTask> {
                             taskDescription: _taskDescription,
                             createdTime: task!.createdTime,
                             dueTime: _pickDate!);
+                        NotificationApi().showNotification(id: 0, body: "${_taskDescription} \n  Status: ${(task!.isDone == true)? "Checked" : "Unchecked"}",title: "Edited ${_taskName}");
                         context
                             .read<TaskBloc>()
                             .add(EditTaskTodo(keyTask: keyTask, task: newTask));
+
                         Navigator.pop(context, 'Save Edit');
                         Navigator.pushReplacement(
                             context,

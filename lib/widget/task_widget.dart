@@ -37,37 +37,39 @@ class _TaskWidgetState extends State<TaskWidget> {
         }, builder: (context, state) {
           return Container(
               decoration: BoxDecoration(
-                  color: Color.fromARGB(255, 68, 68, 107),borderRadius: BorderRadius.circular(6)),
-              height: 80,
+                  color: Color.fromARGB(255, 68, 68, 107),borderRadius: BorderRadius.circular(20)),
+              height: 100,
               margin: EdgeInsets.symmetric(vertical: 5, horizontal: 8),
               padding: EdgeInsets.symmetric(horizontal: 5),
-              child: ListTile(
-                  onLongPress: () => showDialog(
-                      context: context,
-                      builder: (context) {
-                        return EditTask(keyTask: widget.keyTask);
-                      }),
-                  textColor: Colors.white,
-                  title: Text('${widget.task.taskName}'),
-                  subtitle: Text('${widget.task.taskDescription}'),
-                  trailing: Text('${DateFormat.MMMMd().add_jm().format(widget.task.dueTime)}'),
-                  leading: Transform.scale(
-                    scale: 1.4,
-                    child: Checkbox(
-                      side: BorderSide(color: Colors.white, width: 2.0),
-                      activeColor: Colors.cyan,
-                      shape: CircleBorder(),
-                      value: widget.task.isDone,
-                      onChanged: (bool? checked) {
-                        widget.task.isDone = checked!;
-                        context.read<TaskBloc>().add(
-                            AlterTask(keyTask: widget.keyTask, isDone: checked!));
-                        // TaskPreference.checkTask(
-                        //     keyTask: widget.keyTask,
-                        //     isDone: widget.task.isDone);
-                      },
-                    ),
-                  )));
+              child: Center(
+                child: ListTile(
+                    onLongPress: () => showDialog(
+                        context: context,
+                        builder: (context) {
+                          return EditTask(keyTask: widget.keyTask);
+                        }),
+                    textColor: Colors.white,
+                    title: Text('${widget.task.taskName}',style: TextStyle(fontSize: 20,fontWeight: FontWeight.w600),),
+                    subtitle: Text('${widget.task.taskDescription}'),
+                    trailing: Text('${DateFormat.MMMMd().add_jm().format(widget.task.dueTime)}'),
+                    leading: Transform.scale(
+                      scale: 1.4,
+                      child: Checkbox(
+                        side: BorderSide(color: Colors.white, width: 2.0),
+                        activeColor: Colors.cyan,
+                        shape: CircleBorder(),
+                        value: widget.task.isDone,
+                        onChanged: (bool? checked) {
+                          widget.task.isDone = checked!;
+                          context.read<TaskBloc>().add(
+                              AlterTask(keyTask: widget.keyTask, isDone: checked!));
+                          // TaskPreference.checkTask(
+                          //     keyTask: widget.keyTask,
+                          //     isDone: widget.task.isDone);
+                        },
+                      ),
+                    )),
+              ));
         }));
   }
 }

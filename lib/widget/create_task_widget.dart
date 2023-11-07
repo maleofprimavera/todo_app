@@ -34,7 +34,7 @@ class _CreateTaskState extends State<CreateTask> {
       }, builder: (context, state) {
         return AlertDialog(
           backgroundColor: Colors.cyan,
-          title: Text('Create task'),
+          title: const Text('Create task'),
           content: Container(
             height: 200,
             width: 300,
@@ -44,7 +44,7 @@ class _CreateTaskState extends State<CreateTask> {
               children: [
                 TextField(
                   controller: _taskNameController,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                       label: Text('Task'), hintText: "Go for groceries"),
                   onSubmitted: (value) {
                     setState(() {
@@ -54,7 +54,7 @@ class _CreateTaskState extends State<CreateTask> {
                 ),
                 TextField(
                   controller: _taskDescriptionController,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                       label: Text('Description'),
                       hintText: "Banana, Apple, Cider Vinegar"),
                   onSubmitted: (value) {
@@ -69,20 +69,18 @@ class _CreateTaskState extends State<CreateTask> {
                       child: TextField(
                         keyboardType: TextInputType.datetime,
                         controller: _dateController,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           label: Text('Due Date'),
                           hintText: "Enter Date",
                         ),
                         onSubmitted: (value) {
-                          setState(() {
                             _pickDate = DateTime.tryParse(value)!;
                             print("Date picked: " + _pickDate.toString());
-                          });
                         },
                       ),
                     ),
                     IconButton(
-                      icon: Icon(Icons.calendar_today),
+                      icon: const Icon(Icons.calendar_today),
                       onPressed: () async {
                         DateTime? _futurePickedDate;
                         TimeOfDay? _timeOfDay;
@@ -92,13 +90,15 @@ class _CreateTaskState extends State<CreateTask> {
                           firstDate: DateTime.now(),
                           lastDate: DateTime(2500),
                         ));
-                        _timeOfDay = await (showTimePicker(context: context, initialTime: TimeOfDay.now(),));
-                        _futurePickedDate = _futurePickedDate!.copyWith(hour: _timeOfDay!.hour, minute: _timeOfDay!.minute);
-                        setState(() {
+                        _timeOfDay = await (showTimePicker(
+                          context: context,
+                          initialTime: TimeOfDay.now(),
+                        ));
+                        _futurePickedDate = _futurePickedDate!.copyWith(
+                            hour: _timeOfDay!.hour, minute: _timeOfDay!.minute);
                           _pickDate = _futurePickedDate!;
                           _dateController.text = _pickDate.toString();
                           print("Date picked: " + _pickDate.toString());
-                        });
                       },
                     ),
                   ],
@@ -109,10 +109,10 @@ class _CreateTaskState extends State<CreateTask> {
           actions: [
             TextButton(
                 onPressed: () => Navigator.pop(context, 'Cancel'),
-                child: Text('Cancel')),
+                child: const Text('Cancel')),
             TextButton(
                 // todo add bloc here, event
-                onPressed: ()async {
+                onPressed: () async {
                   _taskName = _taskNameController.text;
                   _taskDescription = _taskDescriptionController.text;
                   _pickDate = DateTime.parse(_dateController.text);
@@ -122,15 +122,17 @@ class _CreateTaskState extends State<CreateTask> {
                       dueTime: _pickDate!,
                       taskDescription: _taskDescription);
                   // await NotificationApi.showNotification(scheduledDate: DateTime.now().add(Duration(seconds: 15)), title: task.taskName, body: "${task.taskDescription}");
-                  NotificationApi.showNoScheNotification(title: task.taskName, body: "${task.taskDescription}");
+                  NotificationApi().showNotification(
+                      id: 0, body: _taskName, title: "Added a new todo");
                   context.read<TaskBloc>().add(AddTask(task: task));
-                  print("epoch: " + DateTime.now().microsecondsSinceEpoch.toString());
+                  print("epoch: " +
+                      DateTime.now().microsecondsSinceEpoch.toString());
                   // await TaskPreference.saveTask(taskName: _taskName, createdTime: DateTime.now(), dueTime: _pickDate!,taskDescription: _taskDescription);
                   Navigator.pop(context, 'Save');
                   Navigator.pushReplacement(context,
                       MaterialPageRoute(builder: (context) => const Home()));
                 },
-                child: Text('Save')),
+                child: const Text('Save')),
           ],
         );
       }),

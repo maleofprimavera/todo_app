@@ -89,7 +89,7 @@ class _HomeState extends State<Home> {
                                     ),
                                   );
                                 } else {
-                                  return Container();
+                                  return const Center();
                                 }
                               },
                             );
@@ -98,6 +98,7 @@ class _HomeState extends State<Home> {
                     });
               }),
               floatingActionButton: ElevatedButton(
+                style: ButtonStyle(side:MaterialStateProperty.all(BorderSide(color: Colors.indigo,width: 3))),
                 onPressed: () => showDialog(
                   context: context,
                   builder: (context) {
@@ -105,10 +106,8 @@ class _HomeState extends State<Home> {
                   },
                 ),
                 child: Container(
-                  decoration:
-                  BoxDecoration(borderRadius: BorderRadius.circular(20)),
                   width: 100,
-                  height: 50,
+                  height: 60,
                   child: const Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -116,6 +115,7 @@ class _HomeState extends State<Home> {
                   ),
                 ),
               ),
+
             )));
   }
 }
